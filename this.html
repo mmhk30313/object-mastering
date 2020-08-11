@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'this' keyword in javascript</title>
+</head>
+<body>
+    <h1>'this' keyword is not confused anyone</h1>
+    <!-- <p onclick="add(3,5)">I am a paragraph, don't click me...</p> -->
+    <p onclick="console.log(anotherObj.sum(4,5));this.innerText = 'You clicked me!'" style="color: orange; font-size: 45px; border:2px double greenyellow;cursor: pointer;width: fit-content;">I am a paragraph, don't click me...</p>
+    <!-- <p onclick="anotherObj.sum(4,5)" style="color: orange; font-size: 45px; border:2px double greenyellow;cursor: pointer;width: fit-content;">I am a paragraph, don't click me...</p> -->
+    <!-- <p onclick="add(3,5)" style="color: orange; font-size: 45px; border:2px double greenyellow;cursor: pointer;width: fit-content;">I am a paragraph, don't click me...</p> -->
+    <!-- <p onclick="this.innerText = 'You clicked...'" style="color: orange; font-size: 45px; border:2px double greenyellow;cursor: pointer;width: fit-content;">I am a paragraph, don't click me...</p> -->
+    <script>
+        const myObj = {
+            name: 'Mahadi Hasan',
+            getFullName: function(title){
+                console.log(this);
+                return title+'. '+this.name;
+            }
+        }
+        // console.log(myObj.getFullName);
+        //myObj.getFullName("Md");
+        const anotherObj = {
+            name: 'Sumaiya Jahan',
+        }
+
+        //ekta object er property onno object use korte pare...
+
+        //anotherObj.getFullName = myObj.getFullName;
+        // console.log(anotherObj.getFullName);
+        
+        //anotherObj.getFullName("Mrs");//er jonno ekta output...1bar console.log() call hoy...
+        // console.log(anotherObj.getFullName("Mrs"));
+        function add(n1,n2){
+            console.log(this);
+            arguments;
+            return n1+n2;
+        }
+        add(12,13);//add() function er vitor 'this' keyword ei call er jonno window context hishabe determine hobe...
+
+        // anotherObj.sum() = add();//evabe function kokhono variable hoy na...
+
+        anotherObj.sum = add;//add() function ke anotherObj (Object) er sum() function property banalam...
+
+        // anotherObj.sum();
+        console.log(anotherObj.sum(3,4));//add() function er vitor 'this' keyword anotherObj.sum(3,4) ei call er jonno anotherObj (Object) er context hishabe determine hobe...jekhane sum() function holo anotherObj (Object) er 1ta property...
+
+        myObj.Add = add;
+        console.log(myObj.Add(7,5));//add() function er vitor 'this' keyword myObj.Add(7,5) ei call er jonno myObj (Object) er context hishabe determine hobe...jekhane Add() function holo myObj (Object) er 1ta property...
+        setTimeout(function myDetails(){
+            console.log(this);//window context...
+            const me = {
+                name: "Md. Mehedi Hasan Khan",
+                village: "Bangalgaon",
+                thana: "Kaligonj",
+                district: "Gazipur",
+                mobile: Number('01521108858')
+            }
+            setTimeout(function(){
+                console.log("I am Mahadi & my details\n",me);
+                for(let property in me){
+                    console.log(property,":",me[property]);
+                }
+            },2000);
+        },1000);//1000ms = 1s
+    </script>
+</body>
+</html>
